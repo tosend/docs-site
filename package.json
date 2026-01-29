@@ -8,8 +8,8 @@
     "dev": "vitepress dev",
     "build": "vitepress build",
     "preview": "vitepress preview",
-    "deploy": "npm build && wrangler pages deploy",
-    "deploy:prod": "npm build && wrangler pages deploy --branch=master"
+    "deploy": "pnpm build && wrangler pages deploy .vitepress/dist",
+    "deploy:prod": "pnpm build && wrangler pages deploy .vitepress/dist --branch=master"
   },
   "keywords": [],
   "author": "",
