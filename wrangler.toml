@@ -1,0 +1,8 @@
+name = "tosend-docs"
+compatibility_date = "2024-01-01"
+
+pages_build_output_dir = ".vitepress/dist"
+
+[env.production]
+name = "tosend-docs"
+route = { pattern = "docs.tosend.com", custom_domain = true }

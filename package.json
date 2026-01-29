@@ -1,0 +1,22 @@
+{
+  "name": "user-docs",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev": "vitepress dev",
+    "build": "vitepress build",
+    "preview": "vitepress preview",
+    "deploy": "pnpm build && wrangler pages deploy",
+    "deploy:prod": "pnpm build && wrangler pages deploy --branch=main"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "packageManager": "pnpm@10.28.0",
+  "devDependencies": {
+    "vitepress": "2.0.0-alpha.15",
+    "wrangler": "^3.101.0"
+  }
+}
