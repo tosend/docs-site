@@ -1,5 +1,5 @@
 {
-  "name": "user-docs",
+  "name": "docs-site",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
@@ -8,15 +8,14 @@
     "dev": "vitepress dev",
     "build": "vitepress build",
     "preview": "vitepress preview",
-    "deploy": "pnpm build && wrangler pages deploy",
-    "deploy:prod": "pnpm build && wrangler pages deploy --branch=main"
+    "deploy": "npm build && wrangler pages deploy",
+    "deploy:prod": "npm build && wrangler pages deploy --branch=master"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
-  "packageManager": "pnpm@10.28.0",
   "devDependencies": {
-    "vitepress": "2.0.0-alpha.15",
-    "wrangler": "^3.101.0"
+    "vitepress": "1.6.4",
+    "wrangler": "^4.61.1"
   }
 }
