@@ -1,5 +1,0 @@
-name = "docs-site"
-compatibility_date = "2024-01-01"
-account_id = "bc1a1c44574db2c6033e81bbc745abd0"
-
-pages_build_output_dir = ".vitepress/dist"

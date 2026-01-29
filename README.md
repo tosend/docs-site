@@ -71,7 +71,7 @@ pnpm preview
 ## Project Structure
 
 ```
-user-docs/
+docs-site/
 ├── .vitepress/
 │   ├── config.mjs         # VitePress configuration
 │   └── dist/              # Build output (ignored)
@@ -81,39 +81,25 @@ user-docs/
 │   ├── api/               # API reference
 │   └── sdks/              # SDK documentation
 ├── package.json
-├── wrangler.toml          # Cloudflare Pages config
 └── README.md
 ```
 
 ## Deployment
 
-This site is automatically deployed to Cloudflare Pages.
+This site automatically deploys to [docs.tosend.com](https://docs.tosend.com) via Cloudflare Pages when you push to the `master` branch.
 
-### CLI Deployment
-
+**To deploy:**
 ```bash
-# One-time setup: Authenticate with Cloudflare
-pnpm wrangler login
-
-# Deploy to production
-pnpm deploy:prod
-
-# Deploy to preview
-pnpm deploy
+git add .
+git commit -m "Update documentation"
+git push origin master
 ```
 
-### Continuous Deployment
+Cloudflare Pages will automatically build and deploy your changes in ~1 minute.
 
-The site is configured for automatic deployment via Cloudflare Pages:
-
-1. Push changes to the `main` branch
-2. Cloudflare Pages automatically builds and deploys
-3. Preview deployments are created for pull requests
-
-**Build Configuration:**
-- Build command: `pnpm build`
-- Build output directory: `.vitepress/dist`
-- Node version: 18
+**Preview deployments:**
+- Pull requests automatically get preview URLs
+- Feature branches get their own preview deployments
 
 ## Contributing
 
