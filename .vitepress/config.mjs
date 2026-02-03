@@ -4,8 +4,8 @@ import { defineConfig } from 'vitepress'
 export default defineConfig({
   srcDir: "docs",
 
-  title: "ToSend Documentation",
-  description: "Email sending API documentation for ToSend",
+  title: "toSend Documentation",
+  description: "Email delivery, honestly priced. Documentation for the toSend email API.",
   themeConfig: {
     // https://vitepress.dev/reference/default-theme-config
     nav: [
@@ -58,7 +58,7 @@ export default defineConfig({
 
     footer: {
       message: 'Released under the MIT License.',
-      copyright: 'Copyright © ToSend'
+      copyright: 'Copyright © toSend by WPManageNinja'
     }
   }
 })

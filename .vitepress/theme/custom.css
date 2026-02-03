@@ -1,0 +1,160 @@
+/* Home page custom content sections */
+.home-content {
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 2rem 1.5rem 3rem;
+}
+
+.home-content h2 {
+  text-align: center;
+  font-size: 1.75rem;
+  font-weight: 700;
+  margin-bottom: 1.5rem;
+  letter-spacing: -0.02em;
+}
+
+/* Code example CTA link */
+.home-cta {
+  text-align: center;
+  margin-top: 1.25rem;
+}
+
+.home-cta .cta-link {
+  color: var(--vp-c-brand-1);
+  font-weight: 500;
+  font-size: 0.95rem;
+  transition: color 0.2s;
+}
+
+.home-cta .cta-link:hover {
+  color: var(--vp-c-brand-2);
+}
+
+/* 3-step onboarding section */
+.home-steps {
+  padding-top: 1rem;
+  padding-bottom: 4rem;
+}
+
+.steps-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1.5rem;
+  margin-top: 0.5rem;
+}
+
+.step {
+  padding: 1.5rem;
+  border-radius: 12px;
+  border: 1px solid var(--vp-c-divider);
+  background: var(--vp-c-bg-soft);
+  transition: border-color 0.3s, box-shadow 0.3s;
+}
+
+.step:hover {
+  border-color: var(--vp-c-brand-1);
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.06);
+}
+
+.step-number {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background: var(--vp-c-brand-1);
+  color: var(--vp-c-white);
+  font-weight: 700;
+  font-size: 0.9rem;
+  margin-bottom: 0.75rem;
+}
+
+.step h3 {
+  font-size: 1.05rem;
+  font-weight: 600;
+  margin: 0 0 0.5rem;
+  color: var(--vp-c-text-1);
+}
+
+.step p {
+  font-size: 0.9rem;
+  line-height: 1.6;
+  color: var(--vp-c-text-2);
+  margin: 0;
+}
+
+/* WordPress section */
+.home-wp {
+  padding-top: 0;
+  padding-bottom: 4rem;
+}
+
+.wp-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1.5rem;
+  margin-top: 0.5rem;
+}
+
+.wp-card {
+  padding: 1.5rem;
+  border-radius: 12px;
+  border: 1px solid var(--vp-c-divider);
+  background: var(--vp-c-bg-soft);
+  transition: border-color 0.3s, box-shadow 0.3s;
+}
+
+.wp-card:hover {
+  border-color: var(--vp-c-brand-1);
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.06);
+}
+
+.wp-card h3 {
+  font-size: 1.05rem;
+  font-weight: 600;
+  margin: 0 0 0.5rem;
+  color: var(--vp-c-text-1);
+}
+
+.wp-card p {
+  font-size: 0.9rem;
+  line-height: 1.6;
+  color: var(--vp-c-text-2);
+  margin: 0 0 0.75rem;
+}
+
+.wp-card a {
+  color: var(--vp-c-brand-1);
+  font-weight: 500;
+  font-size: 0.9rem;
+  transition: color 0.2s;
+}
+
+.wp-card a:hover {
+  color: var(--vp-c-brand-2);
+}
+
+.wp-card code {
+  font-size: 0.85rem;
+}
+
+@media (max-width: 768px) {
+  .steps-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .wp-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 480px) {
+  .home-content {
+    padding: 1.5rem 1rem 2rem;
+  }
+
+  .home-content h2 {
+    font-size: 1.4rem;
+  }
+}
