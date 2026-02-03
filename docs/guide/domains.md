@@ -19,7 +19,7 @@ DKIM (DomainKeys Identified Mail) verifies that emails are authorized by the dom
 
 | Type | Name | Value |
 |------|------|-------|
-| TXT | `tosend._domainkey.yourdomain.com` | Provided in dashboard |
+| TXT | <CopyText text="tosend._domainkey.yourdomain.com" /> | <CopyText text="MIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQDFlPZ1FmKv/l3JoSBHRhkaVu1rmv16nScF/J0UW5SQjm2Pzw8MZ2dTotaCJ7A6v4cUzbOqI3IPQUTZocxzn+2doySXLRWVlbqsrQ8rZiACpsJwug/1Qmxeo7EAV5i5fPC99AF6YBATH0xY9yvO9d9rnt5sum8o/dpU5zuWbirJnQIDAQAB" /> |
 
 The DKIM value is a long string containing your public key. Copy the entire value from your dashboard.
 
@@ -29,7 +29,7 @@ SPF (Sender Policy Framework) authorizes ToSend to send emails on behalf of your
 
 | Type | Name | Value |
 |------|------|-------|
-| TXT | `send.yourdomain.com` | `v=spf1 include:amazonses.com ~all` |
+| TXT | <CopyText text="send.yourdomain.com" /> | <CopyText text="v=spf1 include:amazonses.com ~all" /> |
 
 ### MX Record
 
@@ -37,7 +37,7 @@ The MX record enables bounce and complaint handling.
 
 | Type | Name | Priority | Value |
 |------|------|----------|-------|
-| MX | `send.yourdomain.com` | 10 | `feedback-smtp.us-east-1.amazonses.com` |
+| MX | <CopyText text="send.yourdomain.com" /> | 10 | <CopyText text="feedback-smtp.us-east-1.amazonses.com" /> |
 
 ### DMARC Record (Recommended)
 
@@ -45,7 +45,7 @@ DMARC protects your domain from email spoofing and improves deliverability. Add 
 
 | Type | Name | Value |
 |------|------|-------|
-| TXT | `_dmarc.yourdomain.com` | `v=DMARC1; p=none;` |
+| TXT | <CopyText text="_dmarc.yourdomain.com" /> | <CopyText text="v=DMARC1; p=none;" /> |
 
 ::: tip Learn More
 See our complete [DMARC Guide](/guide/dmarc) for detailed setup instructions, policy explanations, and how to use Cloudflare's DMARC Management feature.
