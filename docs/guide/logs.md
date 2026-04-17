@@ -37,14 +37,18 @@ Each log entry contains:
 
 ### By Status
 
-Filter logs by delivery status:
+Filter logs by delivery status. ToSend tracks each email through its full lifecycle:
 
 | Status | Description |
 |--------|-------------|
-| **Sent** | Email was successfully delivered |
-| **Bounced** | Email could not be delivered |
-| **Complaint** | Recipient marked as spam |
-| **Spam** | Blocked due to disposable/invalid address |
+| **Pending** | Accepted by the API and queued, not yet dispatched to SES |
+| **Sent** | Handed off to SES for delivery |
+| **Delivered** | Remote mail server accepted the message |
+| **Bounced** | Delivery failed (hard or soft bounce — see error message) |
+| **Complained** | Recipient marked the email as spam |
+| **Suppressed** | Blocked at the queue stage because the recipient is on your suppression list |
+| **Spam** | Blocked because all recipients used disposable/temporary email addresses |
+| **Failed** | SES rejected the send (e.g. invalid content, quota exceeded) |
 
 ### By Domain
 
@@ -60,10 +64,14 @@ Search logs by:
 
 ## Status Indicators
 
-- **Sent/Delivered**: Email was accepted by the recipient's mail server
+- **Pending**: In the send queue, not yet dispatched
+- **Sent**: Handed to SES — delivery to the recipient server is in flight
+- **Delivered**: Remote mail server accepted the message
 - **Bounced**: Delivery failed (see error message for details)
-- **Complaint**: Recipient reported the email as spam
-- **Spam**: Email was blocked because recipient uses a disposable email address
+- **Complained**: Recipient reported the email as spam
+- **Suppressed**: The recipient is on your account's suppression list; the email was not dispatched
+- **Spam**: All recipients use disposable email addresses — the email was rejected before dispatch
+- **Failed**: SES returned an error at dispatch time
 
 ## Retention
 

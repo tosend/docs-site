@@ -77,14 +77,34 @@ All responses are returned in JSON format.
 
 ## Rate Limits
 
-Rate limits depend on your plan type. Check your account dashboard for current limits.
+Per-second send rate is enforced by SES and varies per account. The [`GET /v2/info`](/api/account-info) endpoint returns the current `limit_per_second` value.
+
+## Per-Request Limits
+
+| Limit | Value |
+|-------|-------|
+| Recipients per email (`to`, `cc`, `bcc`) | 50 each |
+| Subject length | 998 characters |
+| Total attachment size per email | 10 MB |
+| Emails per batch request | 100 |
 
 ## HTTP Status Codes
 
 | Code | Description |
 |------|-------------|
-| 200 | Success |
+| 200 | Success — all emails accepted |
+| 207 | Multi-Status — partial success on batch (some entries failed validation or were all-disposable) |
 | 401 | API key missing |
-| 403 | Invalid API key, insufficient credits, or domain not allowed |
+| 403 | Invalid API key, insufficient credits, all recipients disposable, or domain not allowed |
 | 422 | Validation error |
 | 500 | Server error |
+
+## Response Headers
+
+Successful send/batch responses include diagnostic headers you can log for support tickets:
+
+| Header | Description |
+|--------|-------------|
+| `X-Tenant-Id` | Numeric ID of the account that sent the request |
+| `X-Recipient-Count` | Total recipients accepted for dispatch (after disposable filtering) |
+| `X-Step-Auth`, `X-Step-Validate` | Server-side timings in milliseconds |

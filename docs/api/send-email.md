@@ -21,11 +21,20 @@ POST /v2/emails
 | `text` | string | No* | Plain text content of the email |
 | `cc` | array | No | Array of CC recipients with `email` (required) and `name` (optional). Max 50. |
 | `bcc` | array | No | Array of BCC recipients with `email` (required) and `name` (optional). Max 50. |
-| `reply_to` | object | No | Reply-to address |
-| `headers` | object | No | Custom email headers |
-| `attachments` | array | No | Array of attachment objects |
+| `reply_to` | object \| string | No | Reply-to address — object `{ email, name }` or an RFC 5322 string like `"Support <support@acme.com>"` |
+| `headers` | object | No | Custom email headers (string keys and values) |
+| `attachments` | array | No | Array of attachment objects. Total decoded size must be ≤ 10 MB |
+| `tags` | object | No | Key-value string pairs for analytics and filtering. Keys ≤ 128 chars, values ≤ 256 chars |
+| `message_hash` | string | No | Custom message identifier (≤ 255 chars) returned as `message_id`. If omitted, ToSend generates one |
 
 *At least one of `html` or `text` is required. If only `html` is provided, a plain text version is automatically generated.
+
+### Limits
+
+- **Subject**: ≤ 998 characters (RFC 5322 line length)
+- **Recipients**: up to 50 each in `to`, `cc`, `bcc`
+- **Attachments**: ≤ 10 MB total (sum of decoded sizes). Allowed MIME types include PDF, Office documents, text, common images, and common archives
+- **Batch**: see [Batch Emails](/api/batch-emails) — up to 100 emails per request
 
 ### From Object
 
@@ -76,14 +85,42 @@ Same format as `to` - an array of objects with `email` (required) and `name` (op
 }
 ```
 
-### Reply-To Object
+### Reply-To
+
+Either an object or an RFC 5322 string:
+
+```json
+{ "name": "Support Team", "email": "support@yourdomain.com" }
+```
+
+```json
+"Support Team <support@yourdomain.com>"
+```
+
+A plain address string like `"support@yourdomain.com"` is also accepted. Invalid `reply_to` values are silently dropped rather than rejecting the request.
+
+### Tags
+
+Attach key-value metadata for reporting and webhook filtering:
 
 ```json
 {
-  "name": "Support Team",
-  "email": "support@yourdomain.com"
+  "tags": {
+    "campaign": "welcome-series",
+    "template": "day-0"
+  }
 }
 ```
+
+### Custom Message Hash
+
+Provide your own identifier for cross-referencing in your system:
+
+```json
+{ "message_hash": "order-12345-receipt" }
+```
+
+The same value is returned as `message_id` in the response. Note: ToSend does **not** deduplicate on `message_hash` — sending twice with the same hash dispatches two emails. If you need idempotency, track sent hashes in your own application.
 
 ### Attachment Object
 
@@ -271,6 +308,7 @@ The `message_id` can be used to track the email status.
 
 ## Notes
 
-- Disposable/temporary email addresses are automatically filtered and marked as spam
-- If all recipients are invalid or disposable, the email will not be sent
-- The `from` email domain must be verified in your account before sending
+- Disposable/temporary recipient addresses are filtered out before sending. Mixed batches (some valid, some disposable) still send to the valid recipients; the dropped addresses are recorded under `meta.spam_recipients` in the email log.
+- If **all** recipients are disposable, the request is rejected with `403` and a single `spam` log row is created.
+- The `from` email domain must be verified in your account before sending.
+- Suppression checks (hard bounces, complaints) are performed just before SES dispatch, not during the API request. A `200` response does not guarantee the email will be sent — check the email log for final status.

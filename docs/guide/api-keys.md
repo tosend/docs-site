@@ -31,7 +31,7 @@ Domain-scoped keys are useful for:
 Include your API key in the `Authorization` header:
 
 ```bash
-curl -X POST https://api.tosend.io/v2/emails \
+curl -X POST https://api.tosend.com/v2/emails \
   -H "Authorization: Bearer tsend_your_api_key"
 ```
 

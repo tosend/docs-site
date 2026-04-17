@@ -10,13 +10,31 @@ POST /v2/emails/batch
 
 ## Request Body
 
-**Authentication:** Send your API key via the `Authorization: Bearer <api_key>` header.
+**Authentication:** Send your API key via the `Authorization: Bearer <api_key>` header, or pass an `api_key` field in the wrapped request body (see below).
+
+The batch endpoint accepts two body shapes:
+
+**1. Wrapped object** (recommended):
+
+```json
+{
+  "api_key": "tsend_...",   // optional if using Authorization header
+  "emails": [ /* email objects */ ]
+}
+```
+
+**2. Bare array**:
+
+```json
+[ /* email objects */ ]
+```
 
 | Field | Type | Required | Description |
 |-------|------|----------|-------------|
-| `emails` | array | Yes | Array of email objects |
+| `emails` | array | Yes (in wrapped form) | Array of 1–100 email objects |
+| `api_key` | string | No | API key, as an alternative to the `Authorization` header |
 
-Each email object in the `emails` array follows the same format as the [Send Email](/api/send-email) endpoint. The `to` field must be an array of recipient objects with `email` (required) and `name` (optional).
+Each email object follows the same schema as the [Send Email](/api/send-email) endpoint, including `tags`, `message_hash`, `reply_to`, `headers`, and `attachments`.
 
 ## Example Request
 
@@ -70,9 +88,11 @@ curl -X POST https://api.tosend.com/v2/emails/batch \
 }
 ```
 
+The HTTP status is `200` when every email is accepted.
+
 ## Partial Success Response
 
-When some emails fail validation, they are returned with error details while successful emails are still processed:
+When some emails fail validation, the response status is **`207 Multi-Status`**. The `results` array is returned in the same order as the input, and successful emails are still processed:
 
 ```json
 {
@@ -163,7 +183,9 @@ When some emails fail validation, they are returned with error details while suc
 ## Notes
 
 - Maximum 100 emails per batch request
-- Credit balance is checked before processing the batch
+- Credit balance is checked against the **sum of all valid recipients** before any email is queued; if there isn't enough credit for the whole batch, the request fails with `403`
 - Each email in the batch is validated independently
 - Failed emails do not affect the processing of other emails in the batch
+- Results are returned in the same index order as the input array
+- HTTP status is `200` when all emails succeed, `207` when at least one email returned `error` or `spam`
 - The total recipient count across all emails counts toward your usage
